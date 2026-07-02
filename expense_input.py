@@ -1,10 +1,16 @@
 def main():
     user = get_name()
     expense_list = collect_expenses_v1()
-    if input("Type \"show\" if you would you like to view your current expense record, or anything else if you would like to quit: ").strip().lower() == "show" : 
-        print_all_expenses(user, expense_list)
-    else: 
-        print("Thank you for using our Expense Tracker. ")
+    while True:
+        show_or_quit = input("Type \"show\" if you would you like to view your current expense record, or \"quit\" if you would like to quit: ").strip().lower()
+        if  show_or_quit == "show" : 
+            print_all_expenses(user, expense_list)
+            break
+        elif show_or_quit == "quit" :
+            print("Thank you for using our Expense Tracker. ")
+            break
+        else: 
+            print("Please type either \"show\" or \"quit\". ")
         
 
 def get_name(): 
@@ -18,11 +24,15 @@ def get_expense():
 
 def get_amount():
     while True:
-        expense_amount = float(input("State the amount of your expense: "))
-        if expense_amount <= 0:
-            print("Please, enter a valid amount \n")
-        else: 
-            return expense_amount  
+        try: 
+            expense_amount = float(input("State the amount of your expense: "))
+        except ValueError:
+            print("The amount has to be a number. ")
+        else:
+            if expense_amount <= 0:
+                print("Please, enter a number greater than 0.  \n")
+            else: 
+                return expense_amount  
 
 def get_category():
     while True: 
@@ -72,10 +82,13 @@ def create_expense():
 def collect_expenses_v1():
     expense_list = []
     while True:
-        if input("If you would like to create a new expense record type \"yes\", type anything else to end. ").strip().lower() == "yes":
+        choice = input("If you would like to create a new expense record type \"yes\", type \"no\" to end. ").strip().lower()
+        if choice == "yes":
             expense_list.append(create_expense())
+        elif choice == "no":
+            return expense_list 
         else:
-            return expense_list
+            print("Please type either \"yes\" or \"no\". ")
 
 def calculate_total(expense_list):
     total = 0
