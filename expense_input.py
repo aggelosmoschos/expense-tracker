@@ -3,14 +3,14 @@ def main():
     expense_list = collect_expenses_v1()
     while True:
         show_or_quit = input("Type \"show\" if you would you like to view your current expense record, or \"quit\" if you would like to quit: ").strip().lower()
-        if  show_or_quit == "show" : 
+        if show_or_quit == "show": 
             print_all_expenses(user, expense_list)
             break
-        elif show_or_quit == "quit" :
-            print("Thank you for using our Expense Tracker. ")
+        elif show_or_quit == "quit":
+            print("Thank you for using our Expense Tracker.")
             break
         else: 
-            print("Please type either \"show\" or \"quit\". ")
+            print("Please type either \"show\" or \"quit\".")
         
 
 def get_name(): 
@@ -107,4 +107,24 @@ def print_all_expenses(user_name, expense_list):
         print(f"   Classification: {expense['classification']}")
         print()
     print(f"Total spent: ${calculate_total(expense_list):.2f}")
+    print()
+    print_category_summary(expense_list)
+
+def calculate_category_totals(expense_list):
+    category_amounts = {}
+    for expense in expense_list:
+        report_category = expense["category"]
+        report_amount = expense["amount"]
+        if report_category not in category_amounts: 
+            category_amounts[report_category] = 0 
+        category_amounts[report_category] += report_amount
+    return category_amounts
+
+def print_category_summary(expense_list):
+    category_totals = calculate_category_totals(expense_list)
+    print("Total spent by category: ")
+    for category, total in category_totals.items():
+        print(f"{category}: ${total:.2f}")
+        
+
 main()
