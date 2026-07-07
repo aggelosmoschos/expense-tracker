@@ -109,6 +109,24 @@ def print_all_expenses(user_name, expense_list):
     print(f"Total spent: ${calculate_total(expense_list):.2f}")
     print()
     print_category_summary(expense_list)
+    print(f"The average amount of your expenses is: ${calculate_average_expense(expense_list):.2f}")
+    print()
+    highest = find_highest_expense(expense_list)
+    lowest = find_lowest_expense(expense_list)
+    if expense_list: 
+        print("Your highest expense was: ")
+        print(f"Name: {highest['expense_name']}")
+        print(f"Amount: ${highest['amount']:.2f}") 
+        print(f"Category: {highest['category']}")
+        print(f"Classification: {highest['classification']}")
+        print()
+        print("Your lowest expense was: ")
+        print(f"Name: {lowest['expense_name']}")
+        print(f"Amount: ${lowest['amount']:.2f}") 
+        print(f"Category: {lowest['category']}")
+        print(f"Classification: {lowest['classification']}")
+    else: 
+        print("You have not entered any expenses yet.")
 
 def calculate_category_totals(expense_list):
     category_amounts = {}
@@ -127,4 +145,31 @@ def print_category_summary(expense_list):
         print(f"{category}: ${total:.2f}")
         
 
+def calculate_average_expense(expense_list):
+    if len(expense_list) == 0: 
+        return 0 
+    else: 
+        total = calculate_total(expense_list)
+        return total / len(expense_list)
+    
+def find_highest_expense(expense_list):
+    if not expense_list: 
+        return None 
+    else:
+        highest = expense_list[0]
+        for expense in expense_list: 
+            if expense["amount"] > highest["amount"]:
+                highest = expense 
+        return highest 
+    
+def find_lowest_expense(expense_list):
+    if not expense_list:
+        return None 
+    else: 
+        lowest = expense_list[0]
+        for expense in expense_list:
+            if expense["amount"] < lowest["amount"]:
+                lowest = expense 
+        return lowest 
+    
 main()
