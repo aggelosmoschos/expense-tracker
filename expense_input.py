@@ -1,3 +1,5 @@
+import statistics 
+
 def main():
     user = get_name()
     expense_list = collect_expenses_v1()
@@ -146,30 +148,31 @@ def print_category_summary(expense_list):
         
 
 def calculate_average_expense(expense_list):
-    if len(expense_list) == 0: 
+    amounts = []
+    if not expense_list: 
         return 0 
-    else: 
-        total = calculate_total(expense_list)
-        return total / len(expense_list)
-    
+    else:
+        for expense in expense_list: 
+            amounts.append(expense["amount"])
+    average = statistics.mean(amounts)
+    return average 
+
 def find_highest_expense(expense_list):
     if not expense_list: 
         return None 
-    else:
-        highest = expense_list[0]
-        for expense in expense_list: 
-            if expense["amount"] > highest["amount"]:
-                highest = expense 
+    else: 
+        highest = max(expense_list, key = get_amount_from_dict)
         return highest 
+     
     
 def find_lowest_expense(expense_list):
     if not expense_list:
         return None 
     else: 
-        lowest = expense_list[0]
-        for expense in expense_list:
-            if expense["amount"] < lowest["amount"]:
-                lowest = expense 
+        lowest = min(expense_list, key = get_amount_from_dict)
         return lowest 
     
+def get_amount_from_dict(expense):
+    return expense["amount"]
+
 main()
