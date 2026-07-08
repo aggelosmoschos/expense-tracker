@@ -161,18 +161,15 @@ def find_highest_expense(expense_list):
     if not expense_list: 
         return None 
     else: 
-        highest = max(expense_list, key = get_amount_from_dict)
+        highest = max(expense_list, key=lambda expense: expense["amount"])
         return highest 
-     
-    
+         
 def find_lowest_expense(expense_list):
     if not expense_list:
         return None 
     else: 
-        lowest = min(expense_list, key = get_amount_from_dict)
+        lowest = min(expense_list, key=lambda expense: expense["amount"])
         return lowest 
     
-def get_amount_from_dict(expense):
-    return expense["amount"]
 
 main()
