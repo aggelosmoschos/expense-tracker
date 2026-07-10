@@ -171,5 +171,5 @@ def find_lowest_expense(expense_list):
         lowest = min(expense_list, key=lambda expense: expense["amount"])
         return lowest 
     
-
-main()
+if __name__ == "__main__": 
+    main()
